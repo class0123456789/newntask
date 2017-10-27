@@ -10,3 +10,5 @@ git push -u origin master
 
 git remote add origin https://github.com/class0123456789/newntask.git
 git push -u origin master
+
+http://www.php.cn/js-tutorial-379712.html 例
