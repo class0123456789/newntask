@@ -13,6 +13,6 @@ module.exports = {
             underscored: true
         }
     },
-    //jwtSecret: "asdfsafsafsafsafsafsafsafd",
-    //jwtSession: {session: false}
+    jwtSecret: "asdfsafsafsafsafsafsafsafd",
+    jwtSession: {session: false}
 };

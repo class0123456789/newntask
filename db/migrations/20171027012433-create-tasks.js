@@ -9,10 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type:Sequelize.STRING(50)
+        type:Sequelize.STRING(50),
+        allowNull: false,
       },
       done: {
-        type:Sequelize.BOOLEAN
+        type:Sequelize.BOOLEAN,
+        allowNull: false
+
       },
       createdAt: {
         allowNull: false,

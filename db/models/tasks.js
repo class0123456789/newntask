@@ -1,8 +1,14 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Tasks = sequelize.define('Tasks', {
-    title: DataTypes.STRING(50),
-    done: DataTypes.BOOLEAN
+    title: {
+      type:DataTypes.STRING(50),
+      allowNull: false
+    },
+    done: {
+      type:DataTypes.BOOLEAN,
+      allowNull: false,
+    }
   }
 
 );

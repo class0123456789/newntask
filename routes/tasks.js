@@ -2,6 +2,7 @@ module.exports = app => {
     "use strict";
     var Tasks = app.db.Tasks;
     app.route("/tasks")
+    .all(app.auth.authenticate())
 /*    .all((req,res,next)=>{
       //Middleware for preexecution of routes
       delete req.body.id;
@@ -9,13 +10,14 @@ module.exports = app => {
     })*/
     .get((req,res)=>{
       //"/tasks" :List tasks
-      Tasks.findAll({})
+      Tasks.findAll({where:{user_id:req.user.id}})
         .then(result=>res.json(result))
         .catch(error=>{
           res.status(412).json({msg:error.message});
         });
     })
     .post((req,res)=>{
+        req.body.user_id = req.user.id;
         //"/tasks" :Save new task
         Tasks.create(req.body)
           .then(result=>res.json(result))
@@ -25,6 +27,7 @@ module.exports = app => {
     });
 
     app.route("/tasks/:id")
+    .all(app.auth.authenticate())
 /*    .all((req,res,next)=>{
       //Middleware for preexecution of routes
       delete req.body.id;
@@ -32,7 +35,10 @@ module.exports = app => {
     })*/
     .get((req,res)=>{
       //"/tasks/1" :Find a task
-      Tasks.findOne({where: req.params})
+      Tasks.findOne({where: {
+        id:req.params.id,
+        user_id:req.user.id
+      }})
         .then(result=>{
           if(result){
             res.json(result);
@@ -46,7 +52,10 @@ module.exports = app => {
     })
     .put((req,res)=>{
         //"/tasks/1" :Update a task
-        Tasks.update(req.body,{where:req.params})
+        Tasks.update(req.body,{where:{
+          id:req.params.id,
+          user_id:req.user.id
+        }})
           .then(result=>res.sendStatus(204))
           .catch(error=>{
             res.status(412).json({msg:error.message});
@@ -54,7 +63,10 @@ module.exports = app => {
     })
     .delete((req,res)=>{
       //"/tasks/1" :Delete a task
-      Tasks.destroy({where:req.params})
+      Tasks.destroy({where:{
+        id:req.params.id,
+        user_id:req.user.id
+      }})
         .then(result=>res.sendStatus(204))
         .catch(error=>{
           res.status(412).json({msg:error.message});
